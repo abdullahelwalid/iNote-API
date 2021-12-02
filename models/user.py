@@ -12,7 +12,7 @@ class UserModel(db.Model):
 
     def __init__(self, username, password):
         self.username = username
-        self.password = str(hashlib.sha256(password.encode()).hexdigest())
+        self.password = hashlib.sha256(password.encode()).hexdigest()
         
         
 
