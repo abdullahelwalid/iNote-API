@@ -1,4 +1,4 @@
-#!/Users/abdullah_1/Desktop/Developer/API/my_API/venv/bin/python3
+#!/Users/abdullah_1/Desktop/Developer/API/note_api/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
