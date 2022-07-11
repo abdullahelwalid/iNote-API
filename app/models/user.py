@@ -2,17 +2,33 @@ import hashlib
 from app.models import db
 
 
-class UserModel(db.Model):
+class User(db.Model):
     __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), unique=True)
-    password = db.Column(db.String(200))
-    notes = db.relationship('NoteModel', lazy='dynamic')
+    id = db.Column(
+        db.Integer, 
+        primary_key=True
+        )
+
+    username = db.Column(
+        db.String(64), 
+        unique=True
+        )
+
+    password = db.Column(
+        db.String(64)
+        )
+
+    email = db.Column(
+        db.String(256)
+    )
+
+    notes = db.relationship('Note', lazy='dynamic', )
 
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, email):
         self.username = username
         self.password = hashlib.sha256(password.encode()).hexdigest()
+        self.email = email
         
         
 
