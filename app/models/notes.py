@@ -4,7 +4,7 @@ from app.models import db
 class NoteModel(db.Model):
     __tablename__ = 'notes'
     note_id = db.Column(db.Integer, primary_key=True)
-    note = db.Column(db.String)
+    note = db.Column(db.String(1000))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('UserModel')
 

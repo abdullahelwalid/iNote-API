@@ -18,8 +18,7 @@ def create_app():
 
     @app.before_first_request
     def creat_tables():
-        db.create_all()
-        
+        db.create_all()     
     api = Api(app)
     api.add_resource(UserRegister, '/register')
     api.add_resource(UserList, '/users')
