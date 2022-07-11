@@ -6,7 +6,7 @@ class User(db.Model):
 
     id = db.Column(
         db.Integer, 
-        primary_key = True
+        primary_key=True
         )
 
     username = db.Column(

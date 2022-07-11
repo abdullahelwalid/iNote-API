@@ -47,6 +47,6 @@ def note():
             note = note_content
         )
         db.session.add(note)
-        db.session.commit
+        db.session.commit()
         return {"note": note.json()}, 201
 
