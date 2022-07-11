@@ -2,7 +2,7 @@ from app.models import db
 from datetime import datetime
 
 class Note(db.Model):
-    __tablename__ = 'notes'
+    __tablename__ = 'note'
     note_id = db.Column(
         db.Integer, 
         primary_key=True
@@ -11,8 +11,8 @@ class Note(db.Model):
         db.String(1000)
         )
     user_id = db.Column(
-        db.Integer, 
-        db.ForeignKey('users.id')
+        db.String(64), 
+        db.ForeignKey('user.username')
         )
     date_time = db.Column(
         db.DateTime,
@@ -20,10 +20,6 @@ class Note(db.Model):
     )
 
     user = db.relationship('User')
-
-    def __init__(self, note, user_id,):
-        self.note = note
-        self.user_id = user_id
         
 
     def json(self):

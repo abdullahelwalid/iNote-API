@@ -22,3 +22,31 @@ def note():
         return {
             "notes": [note.json() for note in notes]
         }, 200
+    
+    if request.method == 'POST':
+        if not request.json:
+            abort(400, "request should be body json")
+        data = request.json
+        def _validate(request) -> bool:
+            if 'user_id' not in request:
+                return False
+            if 'note_content' not in request:
+                return False
+            return True
+        if not _validate(data):
+            abort(400, "one or more field is missing")
+        user_id = data['user_id']
+        note_content = data['note_content']
+        if not note_content or len(note_content) < 1:
+            abort(400, "note can't be empty")
+        user = User.query.filter_by(username = user_id).first()
+        if not user:
+            abort(404, "user not found")
+        note = Note(
+            user_id = user_id,
+            note = note_content
+        )
+        db.session.add(note)
+        db.session.commit
+        return {"note": note.json()}, 201
+
