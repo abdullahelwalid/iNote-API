@@ -2,10 +2,12 @@ from flask import Flask
 from flask_migrate import Migrate
 from config import Config
 from app.models import db
+from flask_cors import CORS
 
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     app.config.from_object(Config)
     db.init_app(app)
     migrate = Migrate(app, db, compare_type=True)

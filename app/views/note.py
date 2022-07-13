@@ -19,9 +19,7 @@ def note():
             Note.user_id == user_id
         )
 
-        return {
-            "notes": [note.json() for note in notes]
-        }, 200
+        return jsonify([note.json() for note in notes]), 200
     
     if request.method == 'POST':
         if not request.json:
@@ -50,3 +48,28 @@ def note():
         db.session.commit()
         return {"note": note.json()}, 201
 
+    if request.method == "DELETE":
+        if not request.json:
+            abort(400, "request should be body JSON")
+        data = request.json
+        def _validate(request) -> bool:
+            if "user_id" not in request:
+                return False
+            if "note_id" not in request:
+                return False
+            return True
+        if not _validate(data):
+            abort(400, "one or more data field is missing")
+        user_id = data['user_id']
+        note_id = data['note_id']
+        user = User.query.filter_by(username = user_id).first()
+        if not user:
+            abort(404, "user not found")
+        note = Note.query.filter_by(note_id = note_id).first()
+        if not note:
+            abort(404, "note not found")
+        if note.user_id != user_id:
+            abort(401, "user can't delete others notes")
+        db.session.delete(note)
+        db.session.commit()
+        return jsonify("deleted"), 200

@@ -18,9 +18,7 @@ class Note(db.Model):
         db.DateTime,
         default = datetime.now()
     )
-
-    user = db.relationship('User')
         
 
     def json(self):
-        return {'user_id': self.user_id, 'notes': self.note, 'note_id': self.note_id}
+        return {'user_id': self.user_id, 'note': self.note, 'note_id': self.note_id}

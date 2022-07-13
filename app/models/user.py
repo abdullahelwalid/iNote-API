@@ -28,7 +28,7 @@ class User(db.Model):
         db.String(256)
     )
 
-    notes = db.relationship('Note', lazy='dynamic')
+    notes = db.relationship('Note', lazy='dynamic', backref="user")
         
     def json(self):
         return {'ID': self.id, 'username': self.username, 'password': self.password}
