@@ -6,7 +6,7 @@ from app.models import db
 import hashlib
 
 
-@bp.route('/user', methods = ['POST'])
+@bp.route('/sign-up', methods = ['POST'])
 def user():
     if not request.json:
         abort(400, "request should be body JSON")
@@ -52,3 +52,20 @@ def user():
     db.session.add(user)
     db.session.commit()
     return jsonify(user.json()), 201
+
+
+@bp.route("/sign-in", methods=["POST"])
+def sign_in():
+    if not request.json:
+        abort(400, "request should be body JSON")
+    data = request.json
+    def _validate(request) -> bool:
+        if "user_id" not in request:
+            return False
+        if "password" not in request:
+            return False
+        return True
+    if not _validate(data):
+        abort(400, "one or more data field is missing")
+    user_id = data['user_id']
+    password = data['password']
