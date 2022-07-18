@@ -4,6 +4,7 @@ from app.models.user import User
 from app.views.helper import validate_input
 from app.models import db
 import hashlib
+from sqlalchemy import and_
 
 
 @bp.route('/sign-up', methods = ['POST'])
@@ -68,4 +69,23 @@ def sign_in():
     if not _validate(data):
         abort(400, "one or more data field is missing")
     user_id = data['user_id']
-    password = data['password']
+    password = hashlib.sha256(data['password'].encode()).hexdigest()
+
+    user = User.query.filter(and_(
+        User.username.like(user_id),
+        User.password.like(password)
+    )).first()
+
+    if not user:
+        abort(401, "Invalid credentials")
+
+    token = user.encode_jwt(user.username)
+    return jsonify(
+        {
+            "token": token,
+            "user_id": user.username
+        }
+    )
+
+    
+    

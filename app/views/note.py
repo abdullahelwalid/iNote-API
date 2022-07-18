@@ -4,9 +4,11 @@ from app.models.notes import Note
 from app.views import bp
 from app.models import db
 from sqlalchemy import desc
+from app.views.auth import auth_required
 
 
 @bp.route('/note', methods = ['POST', 'GET', 'DELETE', 'PUT'])
+# @auth_required
 def note():
     if request.method == 'GET':
         user_id = request.args.get('user_id', type=str)
