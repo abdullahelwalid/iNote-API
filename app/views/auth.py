@@ -8,8 +8,9 @@ def auth_required(f):
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
         token = request.headers.get("Authorization")
-        if not token:
+        if not token or len(token) < 10:
             abort(401, "Invalid token")
+        
         token = token.split(" ")[1]
         resp = User.decode_auth_token(token)
         def _validate():
@@ -21,7 +22,6 @@ def auth_required(f):
             return False
         if not _validate():
             abort(401, "Authentication is unsuccessful")
-        print("-------------------", resp)
         if not isinstance(resp, bool):
             user_id = _validate()
             if user_id != resp:

@@ -85,7 +85,7 @@ def sign_in():
             "token": token,
             "user_id": user.username
         }
-    )
+    ), 201
 
     
     

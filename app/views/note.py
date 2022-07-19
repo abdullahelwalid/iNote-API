@@ -8,7 +8,7 @@ from app.views.auth import auth_required
 
 
 @bp.route('/note', methods = ['POST', 'GET', 'DELETE', 'PUT'])
-# @auth_required
+@auth_required
 def note():
     if request.method == 'GET':
         user_id = request.args.get('user_id', type=str)
