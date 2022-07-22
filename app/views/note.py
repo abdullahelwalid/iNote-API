@@ -5,6 +5,7 @@ from app.views import bp
 from app.models import db
 from sqlalchemy import desc
 from app.views.auth import auth_required
+import datetime
 
 
 @bp.route('/note', methods = ['POST', 'GET', 'DELETE', 'PUT'])
@@ -44,7 +45,8 @@ def note():
             abort(404, "user not found")
         note = Note(
             user_id = user_id,
-            note = note_content
+            note = note_content,
+            date_time = datetime.datetime.utcnow()
         )
         db.session.add(note)
         db.session.commit()
@@ -95,11 +97,11 @@ def note():
         if not user:
             abort(404, "user not found")
         note_id = data['note_id']
-        note = Note.query.filter_by(id = note_id).first()
+        note = Note.query.filter_by(note_id = note_id).first()
         if not note:
             abort(404, "note not found")
         note_content = data['note_content']
         note.note = note_content
+        note.date_time = datetime.datetime.utcnow()
         db.session.commit()
         return jsonify("note updated successfully"), 200
-        
