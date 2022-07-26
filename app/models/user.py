@@ -1,4 +1,4 @@
-from app.models import db
+from app import db
 import jwt
 import datetime
 from app import app

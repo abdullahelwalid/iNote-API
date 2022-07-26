@@ -2,7 +2,7 @@ from app.views import bp
 from flask import request, abort, jsonify
 from app.models.user import User
 from app.views.helper import validate_input
-from app.models import db
+from app import db
 import hashlib
 from sqlalchemy import and_
 
@@ -68,7 +68,7 @@ def sign_in():
         return True
     if not _validate(data):
         abort(400, "one or more data field is missing")
-    user_id = data['user_id']
+    user_id = data['user_id'].lower()
     password = hashlib.sha256(data['password'].encode()).hexdigest()
 
     user = User.query.filter(and_(

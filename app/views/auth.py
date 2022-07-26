@@ -1,5 +1,4 @@
 from app.models.user import User
-import jwt
 from flask import abort, request
 import functools
 

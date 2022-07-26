@@ -2,7 +2,7 @@ from flask import abort, request, jsonify
 from app.models.user import User
 from app.models.notes import Note
 from app.views import bp
-from app.models import db
+from app import db
 from sqlalchemy import desc
 from app.views.auth import auth_required
 import datetime

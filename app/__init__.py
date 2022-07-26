@@ -1,9 +1,10 @@
 from flask import Flask
 from flask_migrate import Migrate
 from config import Config
-from app.models import db
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
 
+db = SQLAlchemy()
 
 
 app = Flask(__name__)

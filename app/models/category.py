@@ -1,6 +1,5 @@
 from datetime import datetime
-from unicodedata import category
-from app.models import db
+from app import db
 
 
 class Category(db.Model):

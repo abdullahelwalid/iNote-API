@@ -1,4 +1,4 @@
-from app.models import db
+from app import db
 from datetime import datetime
 
 class Note(db.Model):
