@@ -11,7 +11,7 @@ class Category(db.Model):
     )
 
     category = db.Column(
-        db.String(126)
+        db.String(25)
     )
 
     user_id = db.Column(
