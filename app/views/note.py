@@ -6,9 +6,10 @@ from app import db
 from sqlalchemy import desc
 from app.views.auth import auth_required
 import datetime
-
+from flask_cors import cross_origin
 
 @bp.route('/note', methods = ['POST', 'GET', 'DELETE', 'PUT'])
+@cross_origin(origins="*")
 @auth_required
 def note():
     if request.method == 'GET':

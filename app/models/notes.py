@@ -29,5 +29,6 @@ class Note(db.Model):
             'user_id': self.user_id, 
             'note': self.note, 
             'note_id': self.note_id, 
-            "datetime": self.date_time
+            "datetime": self.date_time,
+            'category': self.category.json()
             }

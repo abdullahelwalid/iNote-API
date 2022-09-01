@@ -54,3 +54,5 @@ Thumbs.db
 zappa_settings1.json
 
 /migrations
+
+zappa_settings.json

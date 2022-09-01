@@ -8,7 +8,8 @@ db = SQLAlchemy()
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(   app
+)
 app.config.from_object(Config)
 db.init_app(app)
 migrate = Migrate(app, db, compare_type=True)
