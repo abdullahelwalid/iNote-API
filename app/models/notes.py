@@ -30,5 +30,5 @@ class Note(db.Model):
             'note': self.note, 
             'note_id': self.note_id, 
             "datetime": self.date_time,
-            'category': self.category.json()
+            'category': self.category.json() if self.category else None
             }
