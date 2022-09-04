@@ -80,6 +80,8 @@ def sign_in():
         abort(401, "Invalid credentials")
 
     token = user.encode_jwt(user.username)
+    if not token:
+        abort(500, "Internal server error")
     return jsonify(
         {
             "token": token,

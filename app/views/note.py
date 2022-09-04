@@ -1,9 +1,10 @@
 from flask import abort, request, jsonify
 from app.models.user import User
 from app.models.notes import Note
+from app.models.category import Category
 from app.views import bp
 from app import db
-from sqlalchemy import desc
+from sqlalchemy import desc, and_
 from app.views.auth import auth_required
 import datetime
 from flask_cors import cross_origin
@@ -34,19 +35,32 @@ def note():
                 return False
             if 'note_content' not in request:
                 return False
+            if 'category_id' not in request:
+                return False
             return True
         if not _validate(data):
             abort(400, "one or more field is missing")
         user_id = data['user_id']
         note_content = data['note_content']
+        category_id = data['category_id']
+
         if not note_content or len(note_content) < 1:
             abort(400, "note can't be empty")
         user = User.query.filter_by(username = user_id).first()
         if not user:
             abort(404, "user not found")
+        if category_id:
+            category = Category.query.filter(and_(
+                Category.id == category_id,
+                Category.user_id == user_id
+            )).first()
+            if not category:
+                abort(404, "category not found")
+            
         note = Note(
             user_id = user_id,
             note = note_content,
+            category_id = category_id,
             date_time = datetime.datetime.utcnow()
         )
         db.session.add(note)
